@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <title>Ciscocore Maker</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}" />
+  </head>
+  <body>
+    <center>
+      <h1><a href="/">Ciscocore Audio Maker</a></h1>
+      <form>
+        <label for="youtube_url">Enter YouTube URL:</label>
+        <input type="text" name="youtube_url" value={{youtube_url}}>
+        <details>
+          <summary>Advanced Options</summary>
+
+          <label for="b_a">Audio Bitrate (Range=0-50000; Default=6300):</label>
+          <input type="number" name="b_a" value="{{b_a}}" min="0" max="50000" step="0.1">
+
+          <label for="highpass">Highpass (Range=0-1000; Default=100):</label>
+          <input type="number" name="highpass" value="{{highpass}}" min="0" max="1000" step="1">
+
+          <label for="lowpass">Lowpass (Range=1000-10000; Default=3000):</label>
+          <input type="number" name="lowpass" value="{{lowpass}}" min="1000" max="10000" step="1">
+        </details>
+        <input type="submit" value="Compress Audio!" id="submitBtn">
+      </form>
+      {% if output_filename %}
+        <a href="{{ url_for('static', filename=output_filename) }}" download="{{ youtube_url }}.mp3">Download Audio</a> 
+        <br>
+        <audio controls loop>
+          <source type="audio/mp3" src="{{ url_for('static', filename=output_filename) }}">
+        </audio>
+        <br>
+      {% endif %}
+      <br>
+      <em>By Kuwar Nagpal & Krithik Vallem</em>
+      <br>
+      <em>Inspired by the <a href="https://www.youtube.com/watch?v=pais41IW5dk" target="_blank">Cisco Hold Music</a>,</em>
+      <br>
+      <small><em>which sounds way cleaner on YT than irl</em></small>
+    </center>
+  </body>
+</html>
+
+<style>
+  center {
+    margin: 30px auto; /* center horizontally */
+    width: 90vw;
+  }
+  body {
+    width: 100%;
+  }
+  input {
+    text-align: center;
+  }
+  label {
+    font-weight: bold;
+  }
+  audio {
+    margin: 10px 10px 10px 10px;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event){
+    let submitBtn = document.querySelector('#submitBtn');    
+    submitBtn.addEventListener('click', () => {
+     submitBtn.value = "Please wait a minute for the audio to appear!";
+    });
+  });
+</script>
